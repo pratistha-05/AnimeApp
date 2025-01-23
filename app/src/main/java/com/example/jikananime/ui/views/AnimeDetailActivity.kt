@@ -8,13 +8,14 @@ import android.webkit.WebViewClient
 
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.example.jikananime.R
 import com.example.jikananime.data.model.AnimeDetail
 import com.example.jikananime.databinding.ActivityAnimeDetailBinding
 import com.example.jikananime.ui.viewmodel.AnimeDetailViewModel
+import com.example.jikananime.utils.ThemeManager
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -24,6 +25,8 @@ class AnimeDetailActivity : AppCompatActivity() {
   private val viewModel: AnimeDetailViewModel by viewModels()
 
   override fun onCreate(savedInstanceState: Bundle?) {
+    applyTheme()
+
     super.onCreate(savedInstanceState)
 
     binding = DataBindingUtil.setContentView(this, R.layout.activity_anime_detail)
@@ -36,6 +39,14 @@ class AnimeDetailActivity : AppCompatActivity() {
     observeAnimeDetails()
   }
 
+  private fun applyTheme() {
+    val isDarkMode = ThemeManager.getSavedTheme(this)
+    if (isDarkMode) {
+      AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+    } else {
+      AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+    }
+  }
   private fun observeAnimeDetails() {
     viewModel.animeDetail.observe(this) { animeDetail ->
       if (animeDetail != null) {

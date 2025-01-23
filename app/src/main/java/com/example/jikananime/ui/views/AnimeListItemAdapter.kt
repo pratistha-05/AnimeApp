@@ -38,7 +38,7 @@ class AnimeListItemAdapter(private var animeList: List<AnimeItem>,  private val 
     fun bind(anime: AnimeItem) {
       binding.title.text = anime.title
       binding.episode.text = "Episodes: ${anime.episodes ?: "-"}"
-      binding.score.text = "Score: ${anime.score ?: "-"}"
+      binding.score.text = "Rating: ${anime.score ?: "-"}"
 
       Glide.with(binding.root)
         .load(anime.images.jpg.image_url)

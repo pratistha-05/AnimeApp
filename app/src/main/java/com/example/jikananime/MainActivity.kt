@@ -5,13 +5,16 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.jikananime.R
 import com.example.jikananime.data.model.AnimeItem
 import com.example.jikananime.databinding.ActivityMainBinding
 import com.example.jikananime.ui.viewmodel.AnimeViewModel
 import com.example.jikananime.ui.views.AnimeDetailActivity
 import com.example.jikananime.ui.views.AnimeListItemAdapter
 import com.example.jikananime.utils.SpacingItemDecoration
+import com.example.jikananime.utils.ThemeManager
 
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -26,11 +29,33 @@ class MainActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     binding = ActivityMainBinding.inflate(layoutInflater)
     setContentView(binding.root)
+    val isDarkMode = ThemeManager.getSavedTheme(this)
+
+    setAppTheme(isDarkMode)
+
+    binding.btnThemeToggle.setOnClickListener {
+      val newIsDarkMode = !ThemeManager.getSavedTheme(this)
+      ThemeManager.saveTheme(this, newIsDarkMode)
+      setAppTheme(newIsDarkMode)
+      updateThemeIcon(newIsDarkMode)
+    }
 
     setupRecyclerView()
     observeAnimeList()
-
     viewModel.fetchTopAnime()
+  }
+
+  private fun setAppTheme(isDarkMode: Boolean) {
+    if (isDarkMode) {
+      AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+    } else {
+      AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+    }
+  }
+
+  private fun updateThemeIcon(isDarkMode: Boolean) {
+    val iconRes = if (isDarkMode) R.drawable.light else R.drawable.dark
+    binding.btnThemeToggle.setImageResource(iconRes)
   }
 
   private fun setupRecyclerView() {

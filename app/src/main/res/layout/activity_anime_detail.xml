@@ -12,9 +12,7 @@
   <androidx.core.widget.NestedScrollView
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:fillViewport="true"
-      android:background="@android:color/white">
-
+      android:fillViewport="true">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -77,15 +75,33 @@
             android:text="@{String.valueOf(animeDetail.episodes)}" />
       </LinearLayout>
 
-      <TextView
+      <HorizontalScrollView
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:text="@{`Genres: ` + animeDetail.genres.get(0).name}"
-          android:textSize="14sp"
-          android:textColor="@android:color/darker_gray"
-          android:paddingTop="4dp" />
+          android:paddingTop="8dp"
+          android:overScrollMode="never">
 
-      <!-- Synopsis -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="🎭 Genres: "
+              android:textSize="14sp"
+              android:textStyle="bold"
+              android:textColor="@android:color/black" />
+
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="@{animeDetail.genres.get(0).name}"
+              android:textSize="14sp"
+              android:textColor="@android:color/darker_gray" />
+        </LinearLayout>
+      </HorizontalScrollView>
       <TextView
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
