@@ -9,7 +9,8 @@ data class AnimeItem(
   val title: String,
   val episodes: Int?,
   val score: Double?,
-  val images: Image
+  val images: Image,
+  val mainCast: List<Cast>
 )
 
 data class Image(
@@ -18,4 +19,9 @@ data class Image(
 
 data class JpgImage(
   val image_url: String
+)
+data class Cast(
+  val name: String,
+  val role: String,
+  val image: String
 )

@@ -8,8 +8,29 @@ import com.bumptech.glide.Glide
 import com.example.jikananime.data.model.AnimeItem
 import com.example.jikananime.databinding.ItemAnimeBinding
 
-class AnimeListItemAdapter(private var animeList: List<AnimeItem>) :
+class AnimeListItemAdapter(private var animeList: List<AnimeItem>,  private val onAnimeClick: (AnimeItem) -> Unit) :
   RecyclerView.Adapter<AnimeListItemAdapter.AnimeViewHolder>() {
+
+  override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AnimeViewHolder {
+    val binding = ItemAnimeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+    return AnimeViewHolder(binding)
+  }
+
+
+  override fun onBindViewHolder(holder: AnimeViewHolder, position: Int) {
+    val anime = animeList[position]
+    holder.bind(anime)
+    holder.itemView.setOnClickListener {
+      onAnimeClick(anime)
+    }
+  }
+
+  override fun getItemCount(): Int = animeList.size
+
+  fun updateData(newList: List<AnimeItem>) {
+    animeList = newList
+    notifyDataSetChanged()
+  }
 
   class AnimeViewHolder(private val binding: ItemAnimeBinding) :
     RecyclerView.ViewHolder(binding.root) {
@@ -23,21 +44,5 @@ class AnimeListItemAdapter(private var animeList: List<AnimeItem>) :
         .load(anime.images.jpg.image_url)
         .into(binding.poster)
     }
-  }
-
-  override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AnimeViewHolder {
-    val binding = ItemAnimeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-    return AnimeViewHolder(binding)
-  }
-
-  override fun onBindViewHolder(holder: AnimeViewHolder, position: Int) {
-    holder.bind(animeList[position])
-  }
-
-  override fun getItemCount(): Int = animeList.size
-
-  fun updateData(newList: List<AnimeItem>) {
-    animeList = newList
-    notifyDataSetChanged()
   }
 }

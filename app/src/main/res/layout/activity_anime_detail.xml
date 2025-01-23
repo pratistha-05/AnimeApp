@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <data>
+    <variable
+        name="animeDetail"
+        type="com.example.jikananime.data.model.AnimeDetail" />
+
+  </data>
+
+  <androidx.core.widget.NestedScrollView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:fillViewport="true"
+      android:background="@android:color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+      <FrameLayout
+          android:layout_width="match_parent"
+          android:layout_height="200dp">
+
+        <WebView
+            android:id="@+id/webViewTrailer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/imgPoster"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:visibility="visible"
+            app:imageUrl="@{animeDetail.images.jpg.imageUrl}" />
+      </FrameLayout>
+
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="@{animeDetail.title}"
+          android:textSize="20sp"
+          android:textStyle="bold"
+          android:paddingTop="8dp" />
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal"
+          android:paddingTop="4dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rating: "
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{animeDetail.rating}" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="  |  Episodes: "
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{String.valueOf(animeDetail.episodes)}" />
+      </LinearLayout>
+
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="@{`Genres: ` + animeDetail.genres.get(0).name}"
+          android:textSize="14sp"
+          android:textColor="@android:color/darker_gray"
+          android:paddingTop="4dp" />
+
+      <!-- Synopsis -->
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="Synopsis:"
+          android:textSize="16sp"
+          android:textStyle="bold"
+          android:paddingTop="8dp" />
+
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="@{animeDetail.synopsis}"
+          android:textSize="14sp"
+          android:textColor="@android:color/darker_gray"
+          android:paddingTop="4dp" />
+
+    </LinearLayout>
+  </androidx.core.widget.NestedScrollView>
+</layout>
